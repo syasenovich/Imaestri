@@ -1,6 +1,6 @@
 package com.imaestri.publicarea;
 
-import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+//import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -36,7 +36,7 @@ public class BrandsTest {
         driver = new FirefoxDriver(ffProfile);*/
        // driver = new FirefoxDriver();
         FirefoxProfile ffProfile = new FirefoxProfile();
-        JavaScriptError.addExtension(ffProfile);
+      //  JavaScriptError.addExtension(ffProfile);
         driver = new FirefoxDriver(ffProfile);
 
     }
@@ -56,9 +56,9 @@ public class BrandsTest {
         //Assert.assertEquals("Current page title", "Reference Web App - QA Automation", pageTitle);
         System.out.println(brandsTitle.getText());
 
-        List<JavaScriptError> jsErrorsMain = JavaScriptError.readErrors(driver);
+       // List<JavaScriptError> jsErrorsMain = JavaScriptError.readErrors(driver);
       //  System.out.println("Total No Of JavaScript Errors : " + jsErrorsMain.size());
-        Assert.assertTrue("JS errors occured: " + jsErrorsMain, jsErrorsMain.isEmpty());
+      //  Assert.assertTrue("JS errors occured: " + jsErrorsMain, jsErrorsMain.isEmpty());
 
         if ( !brandsTitle.getText().contains("BRANDS")) {
             Assert.fail("Brands page was not opened");
@@ -83,8 +83,8 @@ public class BrandsTest {
 
                 try {
                     linkDriver.get(url);
-                    final List<JavaScriptError> jsErrors = JavaScriptError.readErrors(driver);
-                    Assert.assertTrue("JS errors occured: " + jsErrors, jsErrors.isEmpty());
+                  //  final List<JavaScriptError> jsErrors = JavaScriptError.readErrors(driver);
+                 //   Assert.assertTrue("JS errors occured: " + jsErrors, jsErrors.isEmpty());
                      try {
                          WebElement brandContainer = linkDriver.findElement(By.className("company-title"));
                          //if ( !expectedBrand.equalsIgnoreCase(brandContainer.getText()) )
