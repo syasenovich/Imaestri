@@ -1,0 +1,6 @@
+$ cat .gitignore
+.svn
+.idea
+*.iml
+out
+log

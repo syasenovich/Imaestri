@@ -1,7 +1,7 @@
 package com.imaestri.publicarea;
 
 import junit.framework.Assert;
-import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
