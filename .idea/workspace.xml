@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0c339a17-599b-4dae-9040-1f2f34d66259" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="0c339a17-599b-4dae-9040-1f2f34d66259" name="Default" comment="" />
     <ignored path="selenium4imaestri.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -787,7 +784,7 @@
       <workItem from="1467636989392" duration="725000" />
       <workItem from="1467642509967" duration="339000" />
       <workItem from="1467642893434" duration="35888000" />
-      <workItem from="1469103395909" duration="534000" />
+      <workItem from="1469103395909" duration="711000" />
     </task>
     <task id="LOCAL-00001" summary="test commit">
       <created>1467643299808</created>
@@ -799,7 +796,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37486000" />
+    <option name="totallyTimeSpent" value="37663000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
