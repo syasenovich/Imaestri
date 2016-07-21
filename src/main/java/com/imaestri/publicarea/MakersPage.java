@@ -1,7 +1,7 @@
 package com.imaestri.publicarea;
 
-import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
-import org.junit.Assert;
+//import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,15 +11,17 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by syasenovich on 6/20/16.
  */
-public class MakersPage {
+public class MakersPage extends ImaestriPages {
     WebDriver driver;
     public static By MAKERS_TITLE = By.className("toolbar-title");
     public static By MAKERS_CONTAINER = By.className("companies");
-    public static By MAKERS_URLS = By.xpath("//div[@class='images']/a");
+   // public static By MAKERS_URLS = By.xpath("//div[@class='images']/a");
+   public static By MAKERS_URLS = By.cssSelector(".images >a");
 
 
 
@@ -40,10 +42,13 @@ public class MakersPage {
 
     }
 
-    public String openAllMakersPages() {
-        WebElement brandsContainer = driver.findElement(MAKERS_CONTAINER);
+    public String openAllMakersPages() throws InterruptedException {
+        openAllItemsOnPage(driver);
 
-        List<WebElement> link=brandsContainer.findElements(MAKERS_URLS);
+        WebElement brandsContainer = driver.findElement(MAKERS_CONTAINER);
+        List<WebElement> link=driver.findElements(MAKERS_URLS);
+
+        //List<WebElement> link=brandsContainer.findElements(MAKERS_URLS);
 
 
         // System.out.println("brands link number: " +link.size());
@@ -51,16 +56,17 @@ public class MakersPage {
         String FailureMessage = "";
 
         for (int index=0; index<link.size(); index++ ) {
-            //  for (int index=0; index<3; index++ ) {
-            String url = link.get(index).getAttribute("href");
-            // String expectedBrand = link.get(index).getText();
 
+            String url = link.get(index).getAttribute("href");
+           // System.out.println("index= " + index+ " "+link.get(index).getAttribute("href"));
+
+            System.setProperty("webdriver.chrome.driver", "/Users/syasenovich/Documents/chromedriver");
             WebDriver linkDriver = new ChromeDriver();
 
             try {
                 linkDriver.get(url);
-                final List<JavaScriptError> jsErrors = JavaScriptError.readErrors(driver);
-                Assert.assertTrue("JS errors occured: " + jsErrors, jsErrors.isEmpty());
+//                final List<JavaScriptError> jsErrors = JavaScriptError.readErrors(driver);
+//                Assert.assertTrue("JS errors occured: " + jsErrors, jsErrors.isEmpty());
                 try {
                     WebElement brandContainer = linkDriver.findElement(By.className("company-title"));
                     //if ( !expectedBrand.equalsIgnoreCase(brandContainer.getText()) )
@@ -80,4 +86,6 @@ public class MakersPage {
         return FailureMessage;
 //
         }
+
+
 }

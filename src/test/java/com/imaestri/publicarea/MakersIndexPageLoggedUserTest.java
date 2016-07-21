@@ -1,7 +1,8 @@
 package com.imaestri.publicarea;
 
 import junit.framework.Assert;
-import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+//import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -11,28 +12,35 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
+
 import java.io.IOException;
 
 /**
  * Created by syasenovich on 6/21/16.
  */
-public class MakersIndexPageLoggedUser {
+public class MakersIndexPageLoggedUserTest {
 
     private static WebDriver driver;
-    public static final String TEST_ENVIRONMENT = "www.stg1.imaestri.com/";
-    public static final String Prod_ENVIROMENT = "https://www.imaestri.com/";
-    public static String USERNAME = "sveta.yasenovich@gmail.com";
-    public static String PASSWORD = "2013Popova";
+
+    private static GetPropertyValues prop;
 
 
-    @BeforeClass
-    public static void startDriver() {
+public static void readProperties() throws IOException {
+    prop = new GetPropertyValues();
+    prop.getPropValues();
+
+}
+
+    @org.testng.annotations.BeforeClass
+    public static void startDriver() throws IOException {
+        readProperties();
 
         //сделан хромдрайвер потому фаерфокс обновился до последней версии
 
         System.setProperty("webdriver.chrome.driver", "/Users/syasenovich/Documents/chromedriver");
         driver = new ChromeDriver();
-        driver.get(Prod_ENVIROMENT);
+        driver.get(prop.URL);
+        //driver.get(prop.Prod_ENVIROMENT);
 
         driver.manage().window().maximize();
 
@@ -40,13 +48,13 @@ public class MakersIndexPageLoggedUser {
 
     }
 
-    @Test
+    @org.testng.annotations.Test
 
     public void testMakersPagesLoggedUser() throws InterruptedException {
 
         HomePage homePage = new HomePage(driver);
         LoginPage loginPage = homePage.openLoginPage();
-        HomePageLoggedUser homePageLoggedUser = loginPage.login(USERNAME, PASSWORD);
+        HomePageLoggedUser homePageLoggedUser = loginPage.login(prop.USERNAME, prop.PASSWORD);
         MakersPageLoggedUser makersPageLoggedUser = homePageLoggedUser.openMakersPageLoggedUser();
         Assert.assertTrue("Makers Index page was not opened", makersPageLoggedUser.checkOpening());
         Assert.assertEquals("some page were not opened: " + makersPageLoggedUser.openAllMakersPages(),"", makersPageLoggedUser.openAllMakersPages());
@@ -68,16 +76,19 @@ public class MakersIndexPageLoggedUser {
 //        WebElement pass = driver.findElement(By.id("pass"));
 //        WebElement button = driver.findElement(By.id("send2"));
 //
-//        //username.sendKeys("mt+trade@eristocrat.net");
-//        //pass.sendKeys("]WPYx48QFi;HTMv");
+//        //username.sendKeys();
+//        //pass.sendKeys();
 //
-//        username.sendKeys("sveta.yasenovich@gmail.com");
-//        pass.sendKeys("2013Popova");
+//        username.sendKeys(");
+//        pass.sendKeys();
 //
 //        button.submit();
 //
 //    }
 
-
+    @org.testng.annotations.AfterClass
+    public static void tearDown(){
+        driver.quit();
+    }
 
 }

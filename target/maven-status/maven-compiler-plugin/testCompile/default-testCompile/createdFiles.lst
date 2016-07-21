@@ -1,0 +1,12 @@
+com/imaestri/publicarea/TestJS.class
+com/imaestri/publicarea/forgotPassword/ForgotPasswordExistedAccount.class
+com/imaestri/publicarea/registration/RegistrationConsumerTest.class
+com/imaestri/publicarea/registration/RegistrationDesignTradeTest.class
+com/imaestri/publicarea/FAQTest.class
+com/imaestri/publicarea/forgotPassword/ForgotPasswordAfterStep1.class
+com/imaestri/publicarea/forgotPassword/ForgotPasswordTest.class
+com/imaestri/publicarea/MakersIndexPageLoggedUserTest.class
+com/imaestri/publicarea/MakersIndexPageTest.class
+com/imaestri/publicarea/ProductsCatalogTest.class
+com/imaestri/publicarea/registration/RegistrationBusinessTest.class
+com/imaestri/publicarea/DesignersPageLoggedUserTest.class

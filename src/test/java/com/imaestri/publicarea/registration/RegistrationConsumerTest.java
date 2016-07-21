@@ -1,12 +1,22 @@
 package com.imaestri.publicarea.registration;
 
-import junit.framework.TestCase;
+import com.imaestri.publicarea.GetPropertyValues;
+import com.imaestri.publicarea.HomePage;
+import com.imaestri.publicarea.MakersPage;
+import com.imaestri.publicarea.RegistrationPage;
+import junit.framework.*;
 import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,110 +25,53 @@ import java.util.concurrent.TimeUnit;
  */
 public class RegistrationConsumerTest {
     private static WebDriver driver;
-    public static final String TEST_ENVIRONMENT = "www.stg1.imaestri.com/";
-    public static final String Prod_ENVIROMENT = "https://www.imaestri.com/request-account/#register";
-    public static final String PreProd_ENVIROMENT = "www.perf-prod.imaestri.com/request-account/#register";
+    private static GetPropertyValues prop;
 
 
+    public static void readProperties() throws IOException {
+        prop = new GetPropertyValues();
+        prop.getPropValues();
 
-    @BeforeClass
-    public static void initFirefox() {
-        driver = new FirefoxDriver();
+    }
 
-        String URL = "https://imaestri:9cCQD%404M@" + TEST_ENVIRONMENT+"request-account/#register";
-       // String URL = "https://imaestri:9cCQD%404M@" + PreProd_ENVIROMENT;
+    @org.testng.annotations.BeforeClass
+    public static void initChrome() throws IOException {
+        readProperties();
 
-        driver.get(URL);
+        //сделан хромдрайвер потому фаерфокс обновился до последней версии
+
+        System.setProperty("webdriver.chrome.driver", "/Users/syasenovich/Documents/chromedriver");
+        driver = new ChromeDriver();
+        driver.get(prop.URL);
+        //driver.get(prop.Prod_ENVIROMENT);
+
+        driver.manage().window().maximize();
 
 
 
     }
 
-    @Test
-    public void testRequestAccountFormOpens(){
-        try {
-            WebElement requestTitle = driver.findElement(By.className("serif"));
-            //String pageTitle = driver.getTitle();
-            //Assert.assertEquals("Current page title", "Reference Web App - QA Automation", pageTitle);
-            System.out.println(requestTitle.getText());
-            Assert.assertTrue("Request An Account form was not opened", requestTitle.getText().equalsIgnoreCase("Request An Account"));
-            System.out.println("Test 1");
-        }
-        catch (Exception e) {
-            Assert.fail("Request An Account form was not opened");
+//    public static void initFirefox() {
+//        driver = new FirefoxDriver();
 
-        }
-        // Assert.assertEquals("not valid","adasdasd", brandsTitle.getText() );
-    }
-    @Test
-    public void testConsumerRegistration() {
-        System.out.println("Step 1");
-        WebElement emailInput = driver.findElement(By.id("email_address"));
-        WebElement accountType = driver.findElement(By.className("pix-selectable"));
+//        driver.get(URL);
+//
+//
+//
+//    }
 
-        emailInput.sendKeys("svetlana.yasenovich+1@gmail.com");
-        accountType.click();
+    @org.testng.annotations.Test
+    public void testConsumerRegistration() throws InterruptedException {
+        HomePage homePage = new HomePage(driver);
+        RegistrationPage registrationPage = homePage.openRegistrationStep1(prop.CONSUMER_EMAIL, 2);
 
-        WebElement accountTypeClick = driver.findElement(By.className("pix-selectable-list"));
-
-        List<WebElement> accountTypeList=accountTypeClick.findElements(By.className("pix-selectable-item"));
-        accountTypeList.get(2).click();
-
-        WebElement button = driver.findElement(By.id("reg-form-submit"));
-        button.submit();
-////-----
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
-        try {
-            WebElement step2Success = driver.findElement(By.className("top_section_signup"));
-            if (!step2Success.getText().equalsIgnoreCase("COMPLETE YOUR ACCOUNT REGISTRATION"))
-                Assert.assertTrue("Step2 registration page was not opened.", step2Success.getText().equalsIgnoreCase("COMPLETE YOUR ACCOUNT REGISTRATION"));
-
-            else {
-                System.out.println("Step 2");
-                try {
-                    WebElement firstNameInput = driver.findElement(By.id("first_name"));
-                    WebElement lastNameInput = driver.findElement(By.id("last_name"));
-                    WebElement phoneInput = driver.findElement(By.id("customer_telephone"));
-                    WebElement passwordInput = driver.findElement(By.id("password"));
-                    WebElement verifyPasswordInput = driver.findElement(By.id("verify_password"));
-
-
-                    WebElement submitLogInButton = driver.findElement(By.className("button_signup"));
-
-                    firstNameInput.sendKeys("SvetaConsumer");
-                    lastNameInput.sendKeys("Yasenovich");
-                    phoneInput.sendKeys("2012039194");
-                    passwordInput.sendKeys("1234567");
-                    verifyPasswordInput.sendKeys("1234567");
-
-                    submitLogInButton.submit();
-                    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                    WebElement successSignup = driver.findElement(By.className("success-signup"));
-
-                    Assert.assertTrue("Registration Step 2 was not success", successSignup.getText().contains("THANK YOU FOR JOINING"));
-                }
-                catch (Exception e) {
-                    Assert.fail("Registration Step 2 was not successfull");
-
-                }
-
-            }
-        }
-
-
-        catch (Exception e) {
-            Assert.fail("Registration Step 1 was not successfull");
-
-        }
-
-
-
+        Assert.assertTrue("Registration Step1 page was not opened", registrationPage.checkOpeningStep1('C'));
+        Assert.assertTrue("Registration Step2 page was not successfull", registrationPage.checkConsumerRegistration());
 
     }
 
-   /* @AfterClass
-    public static void closeFirefox(){
+   @org.testng.annotations.AfterClass
+    public static void tearDown(){
         driver.quit();
-    }*/
+    }
 }

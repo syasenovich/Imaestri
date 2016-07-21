@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1468335533221" stop="1468335571050" version="1.4.6">
+    <name>Surefire suite</name>
+    <title>Surefire suite : Surefire test[]</title>
+    <test-cases>
+        <test-case start="1468335547577" stop="1468335571040" status="broken">
+            <name>testDesignersPagesLoggedUser</name>
+            <failure>
+                <message>Test was interrupted</message>
+            </failure>
+            <labels>
+                <label name="host" value="Svetlanas-MacBook-Pro.local"/>
+                <label name="thread" value="47194@Svetlanas-MacBook-Pro.local.main"/>
+            </labels>
+        </test-case>
+        <test-case start="1468335533221" stop="1468335571045" status="broken">
+            <name>Surefire suite</name>
+            <title>Surefire suite</title>
+            <failure>
+                <message>Test suite was interrupted, some test cases may be lost</message>
+            </failure>
+        </test-case>
+    </test-cases>
+    <labels>
+        <label name="framework" value="TestNG"/>
+        <label name="language" value="JAVA"/>
+    </labels>
+</ns2:test-suite>

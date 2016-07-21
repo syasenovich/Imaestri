@@ -12,6 +12,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -19,10 +22,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by syasenovich on 6/20/16.
  */
-public class MakersIndexPage {
+public class MakersIndexPageTest {
     private static WebDriver driver;
-    public static final String TEST_ENVIRONMENT = "www.stg1.imaestri.com/";
-    public static final String Prod_ENVIROMENT = "https://www.imaestri.com/brands-preview/?limit=60";
+    private static GetPropertyValues prop;
 
 //    @BeforeClass
 //    public static void initFirefox() throws IOException {
@@ -32,39 +34,44 @@ public class MakersIndexPage {
 //        driver = new FirefoxDriver(ffProfile);
 //
 //    }
-@BeforeClass
 
-public static void startDriver() {
+public static void readProperties() throws IOException {
+    prop = new GetPropertyValues();
+    prop.getPropValues();
 
-    //сделан хромдрайвер потому фаерфокс обновился до последней версии
+}
+    @org.testng.annotations.BeforeClass
+
+public static void initDriver() throws IOException{
+    readProperties();
 
     System.setProperty("webdriver.chrome.driver", "/Users/syasenovich/Documents/chromedriver");
     driver = new ChromeDriver();
-    driver.get(Prod_ENVIROMENT);
-
+        driver.get(prop.URL);
+    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     driver.manage().window().maximize();
+
 
 
 }
 
-//    @Before
-//    public void openBrands()  {
-//        String URL = "https://imaestri:9cCQD%404M@" + TEST_ENVIRONMENT+"brands-preview?limit=all";
-//        // String URL = Prod_ENVIROMENT;
-//
-//        driver.get(URL);
-//
-//
-//    }
 
-    @Test
+    @org.testng.annotations.Test
     public void testBrandsOpens() throws InterruptedException {
-        MakersPage makersPage = new MakersPage(driver);
+        HomePage homePage = new HomePage(driver);
+        MakersPage makersPage = homePage.openMakersPage();
+
+
         Assert.assertTrue("Makers Index page was not opened", makersPage.checkOpening());
 
         Assert.assertEquals("some page were not opened: " + makersPage.openAllMakersPages(),"", makersPage.openAllMakersPages());
 
 
+    }
+
+    @org.testng.annotations.AfterClass
+    public static void tearDown(){
+        driver.quit();
     }
 
 
